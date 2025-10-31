@@ -54,12 +54,12 @@ const Contact = () => {
     {
       icon: <MapPin className="h-6 w-6" />,
       title: "Head Office",
-      details: ["Bhubaneswar, Odisha", "India"],
+      details: ["Plot No-841, Bomikhal, Rasulgarh", "Front Of Nexus Esplanade Mall", "Bhubaneswar - 751010, Odisha"],
     },
     {
       icon: <Phone className="h-6 w-6" />,
       title: "Phone",
-      details: ["+91 XXXXX XXXXX", "+91 XXXXX XXXXX"],
+      details: ["+91 8035427037", "+91 6370285246"],
     },
     {
       icon: <Mail className="h-6 w-6" />,

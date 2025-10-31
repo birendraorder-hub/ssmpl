@@ -310,7 +310,10 @@ const Careers = () => {
                   Email: <a href="mailto:careers@solutionssmpl.in" className="text-primary hover:text-accent transition-colors">careers@solutionssmpl.in</a>
                 </p>
                 <p>
-                  Phone: <a href="tel:+91XXXXXXXXXX" className="text-primary hover:text-accent transition-colors">+91 XXXXX XXXXX</a>
+                  Phone: <a href="tel:+918035427037" className="text-primary hover:text-accent transition-colors">+91 8035427037</a>
+                </p>
+                <p>
+                  <a href="tel:+916370285246" className="text-primary hover:text-accent transition-colors">+91 6370285246</a>
                 </p>
               </div>
             </CardContent>

@@ -66,13 +66,19 @@ const Footer = () => {
               <li className="flex items-start space-x-3">
                 <MapPin className="h-5 w-5 opacity-80 flex-shrink-0 mt-0.5" />
                 <span className="text-sm opacity-80">
-                  Head Office, Bhubaneswar, Odisha, India
+                  Plot No-841, Bomikhal, Rasulgarh, Front Of Nexus Esplanade Mall, Rasulgarh, Bhubaneswar - 751010
                 </span>
               </li>
               <li className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 opacity-80 flex-shrink-0" />
-                <a href="tel:+91XXXXXXXXXX" className="text-sm opacity-80 hover:opacity-100 hover:text-accent transition-all">
-                  +91 XXXXX XXXXX
+                <a href="tel:+918035427037" className="text-sm opacity-80 hover:opacity-100 hover:text-accent transition-all">
+                  +91 8035427037
+                </a>
+              </li>
+              <li className="flex items-center space-x-3">
+                <Phone className="h-5 w-5 opacity-80 flex-shrink-0" />
+                <a href="tel:+916370285246" className="text-sm opacity-80 hover:opacity-100 hover:text-accent transition-all">
+                  +91 6370285246
                 </a>
               </li>
               <li className="flex items-center space-x-3">
