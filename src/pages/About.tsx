@@ -182,6 +182,7 @@ const About = () => {
                 <div className="mt-8 pt-6 border-t border-white/20">
                   <p className="font-bold text-xl">Mr. Indubhusan Behera</p>
                   <p className="opacity-90">Managing Director, SSMPL</p>
+                  <p className="mt-2 opacity-90">Mobile: +91 6370285246</p>
                 </div>
               </CardContent>
             </Card>
