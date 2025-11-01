@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Target, Eye, Award, Users, TrendingUp, Heart } from "lucide-react";
 import aboutImage from "@/assets/about-partnership.jpg";
+import mdImage from "@/assets/md-indubhusan-behera.jpg";
 
 const About = () => {
   const values = [
@@ -113,10 +114,10 @@ const About = () => {
                     <span className="text-accent mr-2">•</span>
                     <span>Continuously train, monitor, and motivate our workforce</span>
                   </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <span>Expand across Odisha with technology-backed excellence</span>
-                  </li>
+                   <li className="flex items-start">
+                     <span className="text-accent mr-2">•</span>
+                     <span>Expand footprint across Odisha and build a pan-India presence</span>
+                   </li>
                   <li className="flex items-start">
                     <span className="text-accent mr-2">•</span>
                     <span>Build long-term partnerships through trust and transparency</span>
@@ -156,33 +157,48 @@ const About = () => {
       </section>
 
       {/* MD Message */}
-      <section className="py-20 bg-gradient-primary text-primary-foreground">
+      <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold mb-2">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
                 Message from the Managing Director
               </h2>
-              <p className="text-xl opacity-90">Mr. Indubhusan Behera</p>
             </div>
-            <Card className="bg-white/10 backdrop-blur-sm border-white/20 shadow-strong">
+            <Card className="border-none shadow-strong">
               <CardContent className="p-8 md:p-12">
-                <p className="text-lg leading-relaxed mb-6 italic">
-                  "At Solution Security Management Pvt. Ltd., we started with a simple idea — to bring professionalism, discipline, and trust to the security and housekeeping industry in Odisha.
-                </p>
-                <p className="text-lg leading-relaxed mb-6">
-                  Today, we are proud to serve clients across the state with a dedicated team of trained and responsible personnel. Our goal has always been to ensure that every client feels confident in the safety, cleanliness, and efficiency of their premises.
-                </p>
-                <p className="text-lg leading-relaxed mb-6">
-                  We continue to invest in people, process, and technology to deliver services that meet modern standards of quality and reliability.
-                </p>
-                <p className="text-lg leading-relaxed font-semibold">
-                  We thank our clients, partners, and staff for their continuous support and trust."
-                </p>
-                <div className="mt-8 pt-6 border-t border-white/20">
-                  <p className="font-bold text-xl">Mr. Indubhusan Behera</p>
-                  <p className="opacity-90">Managing Director, SSMPL</p>
-                  <p className="mt-2 opacity-90">Mobile: +91 6370285246</p>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                  {/* MD Photo */}
+                  <div className="lg:col-span-1 flex justify-center lg:justify-start">
+                    <div className="relative">
+                      <img
+                        src={mdImage}
+                        alt="Mr. Indubhusan Behera - Managing Director"
+                        className="w-64 h-64 object-cover rounded-2xl shadow-medium"
+                      />
+                      <div className="mt-6 text-center lg:text-left">
+                        <p className="font-bold text-xl text-primary">Mr. Indubhusan Behera</p>
+                        <p className="text-muted-foreground">Managing Director</p>
+                        <p className="mt-2 text-sm text-muted-foreground">Mobile: +91 6370285246</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* MD Message */}
+                  <div className="lg:col-span-2 space-y-6">
+                    <p className="text-lg text-foreground leading-relaxed italic">
+                      "At Solution Security Management Pvt. Ltd., we started with a simple idea — to bring professionalism, discipline, and trust to the security and housekeeping industry in Odisha.
+                    </p>
+                    <p className="text-lg text-muted-foreground leading-relaxed">
+                      Today, we are proud to serve clients across Odisha with a dedicated team of trained and responsible personnel. Our core operations span industrial units, corporate offices, educational institutions, residential complexes, and government establishments throughout the state. Our goal has always been to ensure that every client feels confident in the safety, cleanliness, and efficiency of their premises.
+                    </p>
+                    <p className="text-lg text-muted-foreground leading-relaxed">
+                      We continue to invest in people, process, and technology to deliver services that meet modern standards of quality and reliability. As we strengthen our presence across Odisha, we are also preparing to expand our footprint pan-India in the coming years, driven by our commitment to professional excellence and customer satisfaction.
+                    </p>
+                    <p className="text-lg text-foreground leading-relaxed font-semibold">
+                      We thank our clients, partners, and staff for their continuous support and trust."
+                    </p>
+                  </div>
                 </div>
               </CardContent>
             </Card>

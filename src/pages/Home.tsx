@@ -67,7 +67,7 @@ const Home = () => {
               Professional Security and Housekeeping Solutions for a Safer, Cleaner Odisha
             </h1>
             <p className="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed">
-              Solution Security Management Pvt. Ltd. (SSMPL) is a Bhubaneswar-based company providing professional security and housekeeping manpower across Odisha.
+              Solution Security Management Pvt. Ltd. (SSMPL) is a Bhubaneswar-based company providing professional security and housekeeping manpower across Odisha. Serving Odisha with excellence, moving towards a pan-India presence.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button asChild size="lg" className="text-lg">
