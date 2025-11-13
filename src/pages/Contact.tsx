@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,48 +5,89 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { supabase } from "@/integrations/supabase/client";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
+const contactSchema = z.object({
+  full_name: z.string()
+    .trim()
+    .min(2, { message: "Name must be at least 2 characters" })
+    .max(100, { message: "Name must be less than 100 characters" }),
+  email: z.string()
+    .trim()
+    .email({ message: "Invalid email address" })
+    .max(255, { message: "Email must be less than 255 characters" })
+    .optional()
+    .or(z.literal("")),
+  phone: z.string()
+    .trim()
+    .min(10, { message: "Phone number must be at least 10 digits" })
+    .max(15, { message: "Phone number must be less than 15 digits" }),
+  organization: z.string()
+    .trim()
+    .max(200, { message: "Organization name must be less than 200 characters" })
+    .optional()
+    .or(z.literal("")),
+  message: z.string()
+    .trim()
+    .min(10, { message: "Message must be at least 10 characters" })
+    .max(1000, { message: "Message must be less than 1000 characters" }),
+});
+
+type ContactFormData = z.infer<typeof contactSchema>;
 
 const Contact = () => {
   const { toast } = useToast();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    organization: "",
-    message: "",
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Basic validation
-    if (!formData.name || !formData.phone || !formData.message) {
-      toast({
-        title: "Missing Information",
-        description: "Please fill in all required fields",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // In a real application, this would send data to a backend
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for contacting us. We'll get back to you soon.",
-    });
-
-    // Reset form
-    setFormData({
-      name: "",
+  
+  const form = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      full_name: "",
       email: "",
       phone: "",
       organization: "",
       message: "",
-    });
-  };
+    },
+  });
 
-  const handleChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+  const onSubmit = async (data: ContactFormData) => {
+    try {
+      const { error } = await supabase
+        .from("contact_messages")
+        .insert({
+          full_name: data.full_name,
+          email: data.email || null,
+          phone: data.phone,
+          organization: data.organization || null,
+          message: data.message,
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: "Message Sent!",
+        description: "Thank you for contacting us. We'll get back to you within 24 hours.",
+      });
+
+      form.reset();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again later.",
+        variant: "destructive",
+      });
+    }
   };
 
   const contactInfo = [
@@ -125,68 +165,93 @@ const Contact = () => {
                 </p>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Full Name *</Label>
-                    <Input
-                      id="name"
-                      placeholder="Your full name"
-                      value={formData.name}
-                      onChange={(e) => handleChange("name", e.target.value)}
-                      required
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    <FormField
+                      control={form.control}
+                      name="full_name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Full Name *</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Your full name" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
-                  </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Email Address</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="your.email@example.com"
-                        value={formData.email}
-                        onChange={(e) => handleChange("email", e.target.value)}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Email Address</FormLabel>
+                            <FormControl>
+                              <Input type="email" placeholder="your.email@example.com" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="phone"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Phone Number *</FormLabel>
+                            <FormControl>
+                              <Input type="tel" placeholder="+91 XXXXX XXXXX" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
                       />
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="phone">Phone Number *</Label>
-                      <Input
-                        id="phone"
-                        type="tel"
-                        placeholder="+91 XXXXX XXXXX"
-                        value={formData.phone}
-                        onChange={(e) => handleChange("phone", e.target.value)}
-                        required
-                      />
-                    </div>
-                  </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="organization">Organization/Company</Label>
-                    <Input
-                      id="organization"
-                      placeholder="Your company name"
-                      value={formData.organization}
-                      onChange={(e) => handleChange("organization", e.target.value)}
+                    <FormField
+                      control={form.control}
+                      name="organization"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Organization/Company</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Your company name" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
-                  </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Your Message *</Label>
-                    <Textarea
-                      id="message"
-                      placeholder="Tell us about your security and housekeeping requirements..."
-                      rows={6}
-                      value={formData.message}
-                      onChange={(e) => handleChange("message", e.target.value)}
-                      required
+                    <FormField
+                      control={form.control}
+                      name="message"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Your Message *</FormLabel>
+                          <FormControl>
+                            <Textarea
+                              placeholder="Tell us about your security and housekeeping requirements..."
+                              rows={6}
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
-                  </div>
 
-                  <Button type="submit" size="lg" className="w-full">
-                    Send Message
-                  </Button>
-                </form>
+                    <Button 
+                      type="submit" 
+                      size="lg" 
+                      className="w-full"
+                      disabled={form.formState.isSubmitting}
+                    >
+                      {form.formState.isSubmitting ? "Sending..." : "Send Message"}
+                    </Button>
+                  </form>
+                </Form>
               </CardContent>
             </Card>
 
